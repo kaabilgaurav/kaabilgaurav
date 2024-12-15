@@ -14,7 +14,11 @@
 
 <br clear="both">
 
-<img align="right" height="350" src="https://miro.medium.com/v2/resize:fit:1360/1*zVnWJtyGOX_kUIDm6ccCfQ.gif"  />
+<br clear="both">
+
+<div align="center">
+  <img height="350" src="https://miro.medium.com/v2/resize:fit:1360/1*zVnWJtyGOX_kUIDm6ccCfQ.gif"  />
+</div>
 
 ###
 
@@ -60,7 +64,7 @@
 </div>
 
 ###
-<h2 align="left">Connect Me On:</h2>
+<h2 align="left">Connect Me On: </h2>
 
 <div align="center">
   <a href="https://www.linkedin.com/in/gaurav-chaudhary10/" target="_blank">
@@ -78,4 +82,3 @@
 </div>
 
 ###
-
