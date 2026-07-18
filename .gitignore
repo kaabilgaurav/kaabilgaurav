@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+
+# Temporary files
+*.log
+
+# Generated source images (optional)
+source-photo.png
+source-prepped.png

@@ -1,0 +1,57 @@
+name: Update profile art
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r scripts/requirements.txt
+
+      - name: Fetch GitHub Contributions
+        env:
+          GH_PROFILE_USER: kaabilgaurav
+        run: |
+          python scripts/fetch_contributions.py
+
+      - name: Generate Contribution Heatmap
+        run: |
+          python scripts/render_heatmap_svg.py
+
+      - name: Generate ASCII Portrait
+        run: |
+          python scripts/make_ascii_svg.py
+
+      - name: Generate Info Card
+        run: |
+          python scripts/make_info_card.py
+
+      - name: Commit Updated Files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update profile assets"
+          file_pattern: |
+            contrib-heatmap.svg
+            avi-ascii.svg
+            info-card.svg
+            data/contributions.json
