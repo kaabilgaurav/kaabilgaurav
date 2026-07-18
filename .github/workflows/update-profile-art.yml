@@ -38,6 +38,10 @@ jobs:
         run: |
           python scripts/render_heatmap_svg.py
 
+      - name: Prepare Portrait
+        run: |
+          python scripts/prep_photo.py
+
       - name: Generate ASCII Portrait
         run: |
           python scripts/make_ascii_svg.py
@@ -55,3 +59,4 @@ jobs:
             avi-ascii.svg
             info-card.svg
             data/contributions.json
+            source-prepped.png
