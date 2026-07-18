@@ -57,30 +57,10 @@ jobs:
         run: |
           python scripts/make_info_card.py
 
-      - name: Commit & Push Changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add contrib-heatmap.svg gaurav-ascii.svg info-card.svg data/contributions.json
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-
-          git commit -m "chore: update profile assets"
-
-          for attempt in 1 2 3; do
-            if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
-              exit 0
-            fi
-
-            git rebase --abort || true
-            if [ "${attempt}" -eq 3 ]; then
-              echo "Unable to publish generated assets after ${attempt} attempts." >&2
-              exit 1
-            fi
-
-            sleep $((attempt * 2))
-          done
+      - name: Commit Generated Assets
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update profile assets"
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          file_pattern: contrib-heatmap.svg gaurav-ascii.svg info-card.svg data/contributions.json
