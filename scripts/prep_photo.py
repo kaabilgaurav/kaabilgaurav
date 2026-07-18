@@ -7,7 +7,10 @@ Prepare a portrait photo for clean ASCII conversion:
      (white -> spaces in the ascii ramp)
 
 Output: source-prepped.png (grayscale), consumed by make_ascii_svg.py.
-Run once whenever the source photo changes; the ascii SVG itself is static.
+Run manually whenever the source photo changes; the ASCII SVG itself is static.
+Install its optional dependencies first with:
+
+    pip install -r scripts/requirements-photo-prep.txt
 
     python scripts/prep_photo.py <input.jpg> [output.png]
 """

@@ -1,0 +1,6 @@
+# Optional local dependencies for scripts/prep_photo.py.
+# This file is intentionally not installed by the GitHub Actions workflow.
+-r requirements.txt
+numpy
+rembg
+opencv-python-headless
