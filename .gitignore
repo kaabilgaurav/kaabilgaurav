@@ -12,6 +12,3 @@ __pycache__/
 # Temporary files
 *.log
 
-# Generated source images (optional)
-source-photo.png
-source-prepped.png
