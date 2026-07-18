@@ -32,7 +32,7 @@ GREEN = "#3fb950"
 ACCENT = "#22d3ee"
 
 # content model: tuples describing each row
-# ("host",)                    -> "avi@github" + rule
+# ("host",)                    -> "kaabilgaurav@github" + rule
 # ("kv", key, value)           -> orange key + light value
 # ("sec", title)               -> blue "— title —" rule
 # ("bul", text)                -> green dot + light text
@@ -103,17 +103,17 @@ for i, row in enumerate(ROWS):
         y += LINE_H * 0.5
         continue
     if kind == "host":
-       inner = (
-    f'<text x="{KEY_X}" y="{y:.1f}" '
-    f'font-size="14" font-weight="700">'
-    f'<tspan fill="{GREEN}">gaurav</tspan>'
-    f'<tspan fill="{MUTED}">@</tspan>'
-    f'<tspan fill="{ACCENT}">github</tspan>'
-    f'</text>'
-    f'<line x1="{KEY_X+92}" y1="{y-4:.1f}" '
-    f'x2="{W-PAD}" y2="{y-4:.1f}" '
-    f'stroke="{FRAME}" stroke-opacity="0.8"/>'
-)
+        inner = (
+            f'<text x="{KEY_X}" y="{y:.1f}" '
+            f'font-size="14" font-weight="700">'
+            f'<tspan fill="{GREEN}">kaabilgaurav</tspan>'
+            f'<tspan fill="{MUTED}">@</tspan>'
+            f'<tspan fill="{ACCENT}">github</tspan>'
+            f'</text>'
+            f'<line x1="{KEY_X+138}" y1="{y-4:.1f}" '
+            f'x2="{W-PAD}" y2="{y-4:.1f}" '
+            f'stroke="{FRAME}" stroke-opacity="0.8"/>'
+        )
     elif kind == "sec":
         title = esc(row[1])
         inner = (f'<text x="{KEY_X}" y="{y:.1f}" fill="{SECTION}" font-size="12.5" font-weight="700">'

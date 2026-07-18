@@ -53,7 +53,8 @@ def fetch_days():
 
 def compute_current_streak(days):
     idx = len(days) - 1
-    if days[idx]["count"] == 0:
+    today = datetime.date.today().isoformat()
+    if days[idx]["date"] == today and days[idx]["count"] == 0:
         idx -= 1  # today isn't over yet -- don't break the streak on it
     streak = 0
     end_idx = idx

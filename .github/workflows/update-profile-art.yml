@@ -7,9 +7,18 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - contrib-heatmap.svg
+      - gaurav-ascii.svg
+      - info-card.svg
+      - data/contributions.json
 
 permissions:
   contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   update-profile:
@@ -18,6 +27,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -50,12 +61,12 @@ jobs:
         run: |
           python scripts/make_info_card.py
 
-                 - name: Commit & Push Changes
+      - name: Commit & Push Changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add contrib-heatmap.svg avi-ascii.svg info-card.svg data/contributions.json
+          git add contrib-heatmap.svg gaurav-ascii.svg info-card.svg data/contributions.json
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
@@ -64,6 +75,16 @@ jobs:
 
           git commit -m "chore: update profile assets"
 
-          git pull --rebase origin main
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
 
-          git push
+            git rebase --abort || true
+            if [ "${attempt}" -eq 3 ]; then
+              echo "Unable to publish generated assets after ${attempt} attempts." >&2
+              exit 1
+            fi
+
+            sleep $((attempt * 2))
+          done

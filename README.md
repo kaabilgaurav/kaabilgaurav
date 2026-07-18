@@ -2,7 +2,7 @@
 
 <h3><code>kaabilgaurav@github ~ $ ./contributions.sh</code></h3>
 
-<img src="./contrib-heatmap.svg" width="860" alt="Gaurav's GitHub Contribution Graph" />
+<img src="./contrib-heatmap.svg" width="860" alt="Animated GitHub contribution heatmap for Gaurav Chaudhary" />
 
 <br><br>
 
@@ -11,11 +11,11 @@
 <table>
 <tr>
 <td valign="top">
-<img src="./avi-ascii.svg" width="370" alt="Gaurav Chaudhary ASCII Portrait"/>
+<img src="./gaurav-ascii.svg" width="370" alt="Animated ASCII portrait of Gaurav Chaudhary"/>
 </td>
 
 <td valign="top">
-<img src="./info-card.svg" width="490" alt="Gaurav Chaudhary Info Card"/>
+<img src="./info-card.svg" width="490" alt="Animated terminal information card for Gaurav Chaudhary"/>
 </td>
 </tr>
 </table>
@@ -52,3 +52,4 @@ Role      : Software Developer
 Location  : Indore, India
 Education : B.Tech CSIT
 College   : IPS Academy
+```
