@@ -85,7 +85,7 @@ def compute_longest_streak(days):
     return longest, longest_start, longest_end
 
 
-def build_data(days):
+def build_data(days, generated_at=None):
     total = sum(d["count"] for d in days)
     active_days = sum(1 for d in days if d["count"] > 0)
     best = max(days, key=lambda d: d["count"])
@@ -100,7 +100,7 @@ def build_data(days):
 
     return {
         "username": USERNAME,
-        "generated_at": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "generated_at": generated_at,
         "range": {"start": days[0]["date"], "end": days[-1]["date"]},
         "total_contributions": total,
         "active_days": active_days,
@@ -113,12 +113,35 @@ def build_data(days):
     }
 
 
+def load_existing_data():
+    try:
+        with open(OUT_PATH, encoding="utf-8") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
+def contribution_data_changed(new_data, existing_data):
+    """Compare generated content without the volatile generation timestamp."""
+    new_content = {key: value for key, value in new_data.items() if key != "generated_at"}
+    existing_content = {key: value for key, value in existing_data.items() if key != "generated_at"}
+    return new_content != existing_content
+
+
+def current_timestamp():
+    return datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 if __name__ == "__main__":
     days = fetch_days()
-    data = build_data(days)
+    existing_data = load_existing_data()
+    existing_timestamp = existing_data.get("generated_at") if existing_data else None
+    data = build_data(days, existing_timestamp)
+    if not existing_data or not existing_timestamp or contribution_data_changed(data, existing_data):
+        data["generated_at"] = current_timestamp()
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
-    with open(OUT_PATH, "w") as f:
-        json.dump(data, f, indent=2)
+    with open(OUT_PATH, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=2)
     print(f"wrote {OUT_PATH}: {data['total_contributions']} contributions, "
           f"current streak {data['current_streak']['length']}, "
           f"longest streak {data['longest_streak']['length']}")
